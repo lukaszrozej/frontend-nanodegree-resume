@@ -44,11 +44,39 @@ const projects = {
   }],
 }
 
+const education = {
+  schools: [{
+    name: 'School of Life',
+    location: 'Earth',
+    degree: 'Master',
+    majors: ['Procrastination', 'Daydreaming'],
+    dates: '1000 - 2000',
+  }, {
+    name: 'Kindergarten',
+    location: 'Warsaw, Poland',
+    degree: 'Little Boy',
+    majors: ['Sleeping', 'Not eating'],
+    dates: '0 - 1000',
+  }],
+  onlineCourses: [{
+    title: 'How to become a millionaire',
+    school: 'ConMen.com',
+    dates: '2010 - 2011',
+    url: '',
+  }, {
+    title: 'How to become a millionaire',
+    school: 'ConMen.com',
+    dates: '2010 - 2011',
+    url: '',
+  }],
+}
+
 const octopus = {
   init: function() {
     headerView.init();
     workView.init();
     projectsView.init();
+    educationView.init();
   },
 
   getBio: function() {
@@ -62,6 +90,10 @@ const octopus = {
   getProjects: function() {
     return projects.projects;
   },
+
+  getEducation: function() {
+    return education;
+  }
 }
 
 const headerView = {
@@ -141,4 +173,33 @@ const projectsView = {
   },
 }
 
+const educationView = {
+  init: function() {
+    this.element = document.getElementById('education');
+    this.render();
+  },
+
+  render: function() {
+    const education = octopus.getEducation();
+
+    this.element.innerHTML = `
+      <h2>Education</h2>` +
+      education.schools.map(school =>
+        `<div class="education-entry">
+          <a href="#">${school.name} -- ${school.degree}</a>
+          <div class="date-text">${school.dates}</div>
+          <div class="location-text">${school.location}</div>
+          <em><br>Major: ${school.majors.join(', ')}</em>
+        </div>`
+      ).join('\n') + `
+      <h3>Online Classes</h3>` +
+      education.onlineCourses.map(course => `
+        <div class="education-entry">
+          <a href="#">${course.title} - ${course.school}</a>
+          <div class="date-text">${course.dates}</div>
+          <br><a href="#">${course.url}</a>
+        </div>`
+      ).join('\n');
+  },
+}
 octopus.init();

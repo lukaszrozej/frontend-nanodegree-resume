@@ -30,10 +30,25 @@ const work = {
   }],
 }
 
+const projects = {
+  projects: [{
+    title: 'World Domination',
+    dates: 'Jan 1666 - now',
+    description: 'I imagined I was a king. I imagined I was an emperor. I imagined I was God. I ate pizza. I imagined I ate the world.',
+    images: ['images/fry.jpg', 'images/fry.jpg', 'images/fry.jpg', ],
+  }, {
+    title: 'Love',
+    dates: 'yesterday - today',
+    description: 'I thought what I would say. I thought how I would look. I imagined a kiss. I envisioned cuddling. Then I dopped my head pretending not to stare.',
+    images: ['images/197x148.gif', ],
+  }],
+}
+
 const octopus = {
   init: function() {
     headerView.init();
     workView.init();
+    projectsView.init();
   },
 
   getBio: function() {
@@ -42,7 +57,11 @@ const octopus = {
 
   getJobs: function() {
     return work.jobs;
-  }
+  },
+
+  getProjects: function() {
+    return projects.projects;
+  },
 }
 
 const headerView = {
@@ -85,16 +104,40 @@ const workView = {
   render: function() {
     const jobs = octopus.getJobs();
 
-    this.element.innerHTML =
+    this.element.innerHTML = `
+      <h2>Work Experience</h2>` +
       jobs.map(job => `
         <div class="work-entry">
-          <h2>Work Experience</h2>
           <a href="#">${job.employer} - ${job.title}</a>
           <div class="date-text">${job.dates}</div> 
           <div class="location-text">${job.location}</div>
           <p><br>${job.description}</p>
         </div>`
       ).join('\n');
+  },
+}
+
+const projectsView = {
+  init: function() {
+    this.element = document.getElementById('projects');
+    this.render();
+  },
+
+  render: function() {
+    const projects = octopus.getProjects();
+
+    this.element.innerHTML = `
+      <h2>Projects</h2>` +
+      projects.map(project => `
+        <div class="project-entry">
+          <a href="#">${project.title}</a>';
+          <div class="date-text">${project.dates}</div>
+          <p><br>${project.description}</p>` +
+          project.images.map(url =>
+            `<img src="${url}">`
+          ).join('\n') + `
+        </div>`
+      ).join('\n')
   },
 }
 

@@ -14,17 +14,38 @@ const bio = {
   biopic: 'images/fry.jpg',
 };
 
+const work = {
+  jobs: [{
+    employer: 'Obscure Company',
+    title: 'The Go-To-Guy',
+    location: 'Kiev, Ukraine',
+    dates: 'Jan 2000 - Feb 2001',
+    description: 'I did what I was told. I told everybody what I did. I was obscure, but I had a lot of company.'
+  }, {
+    employer: 'Flamboyant Company',
+    title: 'Scapegoat',
+    location: 'Beijing, China',
+    dates: 'Jan 1999 - Feb 2000',
+    description: 'I was a flamingo, I was a boy, I was an ant. I composed anything. I escaped goats. I was being jingoistic. '
+  }],
+}
+
 const octopus = {
   init: function() {
     headerView.init();
+    workView.init();
   },
 
   getBio: function() {
     return bio;
+  },
+
+  getJobs: function() {
+    return work.jobs;
   }
 }
 
-headerView = {
+const headerView = {
   init: function() {
     this.header = document.getElementById('header');
     this.render();
@@ -52,7 +73,29 @@ headerView = {
         `<li class="flex-item"><span class="white-text">${skill}</span></li>`
       ).join('\n') + `
       </ul>`;
-  }
+  },
+}
+
+const workView = {
+  init: function() {
+    this.element = document.getElementById('workExperience');
+    this.render();
+  },
+
+  render: function() {
+    const jobs = octopus.getJobs();
+
+    this.element.innerHTML =
+      jobs.map(job => `
+        <div class="work-entry">
+          <h2>Work Experience</h2>
+          <a href="#">${job.employer} - ${job.title}</a>
+          <div class="date-text">${job.dates}</div> 
+          <div class="location-text">${job.location}</div>
+          <p><br>${job.description}</p>
+        </div>`
+      ).join('\n');
+  },
 }
 
 octopus.init();

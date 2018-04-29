@@ -77,6 +77,7 @@ const octopus = {
     workView.init();
     projectsView.init();
     educationView.init();
+    contactsView.init();
   },
 
   getBio: function() {
@@ -201,5 +202,27 @@ const educationView = {
         </div>`
       ).join('\n');
   },
+}
+
+contactsView = {
+  init: function() {
+    this.element = document.getElementById('lets-connect');
+    this.render();
+  },
+
+  render: function() {
+    const bio = octopus.getBio();
+
+    this.element.innerHTML = `
+      <h2 class="orange center-text">Let's Connect</h2>
+      <ul id="footerContacts" class="flex-box">` + 
+      Object.entries(bio.contacts).map(([type, value]) => `
+        <li class="flex-item">
+          <span class="orange-text">${type}</span>
+          <span class="white-text">${value}</span>
+        </li>`
+      ).join('\n') + `
+      </ul>`
+  }
 }
 octopus.init();
